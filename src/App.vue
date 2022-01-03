@@ -12,7 +12,7 @@
   --main-color: #f9f9f9;
   --second-color: #f9f9f9;
   --third-color: #f9f9f9;
-  --bg-color: #000015;
+  --bg-color: #f1f1f1;
   --light-color: rgba(255, 255, 255, 0.90);
   --dark-color: #000015;
 }
