@@ -20,19 +20,19 @@ export default {
       currentIndex: 0,
       slides:[
         {
-          url: "https://picsum.photos/1280/720",
+          url: "https://picsum.photos/1280/720?random=1",
         },
         {
-          url: "https://picsum.photos/1280/720",
+          url: "https://picsum.photos/1280/720?random=2",
         },
         {
-          url: "https://picsum.photos/1280/720",
+          url: "https://picsum.photos/1280/720?random=3",
         },
         {
-          url: "https://picsum.photos/1280/720",
+          url: "https://picsum.photos/1280/720?random=4",
         },
         {
-          url: "https://picsum.photos/1280/720",
+          url: "https://picsum.photos/1280/720?random=5",
         },
       ]
     }
@@ -46,29 +46,31 @@ export default {
     },
     changeSlide(index){
       let slides = this.$refs.slider.querySelectorAll('.slide')
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.marginLeft = null
-        if(index == undefined && this.currentIndex+1 == i){
-          if(i != 0){
-            slides[i-1].style.marginLeft = "-100vw"
+      if(index == undefined){
+        for (let i = 0; i < slides.length; i++) {
+          if(i > 0 && i < this.currentIndex+1){
+            slides[i].style.marginLeft = "-100%"
           }
-          slides[i].style.marginLeft = "0vw"
-          if(i != slides.length){
-            slides[i+1].style.marginLeft = "-100vw"
+          if(i == this.currentIndex+1){
+            slides[i].style.marginLeft = "0%"
           }
-          this.currentIndex++
+          if(i > this.currentIndex+1 && i < slides.length){
+            slides[i].style.marginLeft = "100%"
+          }
         }
-        else if(index == i){
-          if(i != 0){
-            slides[i-1].style.marginLeft = "-100vw"
+      }
+      else{
+        for (let i = 0; i < slides.length; i++) {
+          if(i < index){
+            slides[i].style.marginLeft = "-100%"
           }
-          slides[i].style.marginLeft = "0vw"
-          if(i != slides.length){
-            slides[i+1].style.marginLeft = "-100vw"
+          if(i == index){
+            slides[i].style.marginLeft = "0%"
           }
-          this.currentIndex = i
+          if(i > index){
+            slides[i].style.marginLeft = "100%"
+          }
         }
-        break
       }
     },
     setup(){
@@ -100,22 +102,25 @@ export default {
 </script>
 <style lang="scss">
   .slider{
-    height: 100vh;
-    width: 100vw;
+    height: 50vh;
+    width: 30vw;
     position: relative;
+    overflow: hidden;
   }
   .slider__wrapp{
-    display: flex;
     position: relative;
+    width: 100%;
+    height: 100%;
     .slide{
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       position: absolute;
-      transition: 1s;
+      transition: .2s linear;
       .slide__image{
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
+        display: block;
         cursor: auto;
       }
     }
@@ -133,7 +138,7 @@ export default {
     .slider__button div{
       height: 8px;
       width: 8px;
-      background: #000;
+      background: rgba(255, 255, 255, 0.8);
       border-radius: 8px;
       transition: .1s linear;
       pointer-events: none;
